@@ -1,0 +1,14 @@
+[
+  {
+    "id": "R1",
+    "condicoes": ["Wi-Fi não conecta", "Internet caindo constantemente"],
+    "conclusao": "instabilidade_no_roteador",
+    "explicacao": "A falha simultânea de conexão e estabilidade indica que o hardware do roteador está falhando."
+  },
+  {
+    "id": "R2",
+    "condicoes": ["instabilidade_no_roteador"],
+    "conclusao": "REINICIAR_E_ATUALIZAR_FIRMWARE",
+    "explicacao": "Como o roteador está instável, o primeiro passo técnico é limpar o cache e atualizar o sistema dele."
+  }
+]
