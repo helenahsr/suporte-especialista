@@ -1,14 +1,88 @@
 [
   {
     "id": "R1",
-    "condicoes": ["Wi-Fi não conecta", "Internet caindo constantemente"],
-    "conclusao": "instabilidade_no_roteador",
+    "condicoes": [
+      "Wi-Fi não conecta",
+      "Internet caindo constantemente"
+    ],
+    "conclusao": "Instabilidade no roteador",
     "explicacao": "A falha simultânea de conexão e estabilidade indica que o hardware do roteador está falhando."
   },
   {
     "id": "R2",
-    "condicoes": ["instabilidade_no_roteador"],
-    "conclusao": "REINICIAR_E_ATUALIZAR_FIRMWARE",
+    "condicoes": [
+      "Instabilidade no roteador"
+    ],
+    "conclusao": "Reiniciar e atualizar firmware do roteador",
     "explicacao": "Como o roteador está instável, o primeiro passo técnico é limpar o cache e atualizar o sistema dele."
+  },
+  {
+    "id": "R3",
+    "condicoes": [
+      "Computador está lento",
+      "Aviso de pouco espaço em disco"
+    ],
+    "conclusao": "Disco cheio causando lentidão",
+    "explicacao": "Quando o disco está quase cheio, o sistema operacional não consegue usar memória virtual adequadamente, causando lentidão."
+  },
+  {
+    "id": "R4",
+    "condicoes": [
+      "Disco cheio causando lentidão"
+    ],
+    "conclusao": "Limpar arquivos temporários e liberar espaço",
+    "explicacao": "A solução é liberar espaço removendo arquivos temporários, lixeira e programas desnecessários."
+  },
+  {
+    "id": "R5",
+    "condicoes": [
+      "Computador está lento",
+      "Ocorreu uma tela azul (BSOD)"
+    ],
+    "conclusao": "Possível falha de hardware ou driver",
+    "explicacao": "Lentidão combinada com tela azul indica problemas com drivers corrompidos ou hardware defeituoso (RAM, HD)."
+  },
+  {
+    "id": "R6",
+    "condicoes": [
+      "Possível falha de hardware ou driver"
+    ],
+    "conclusao": "Executar diagnóstico de memória e verificar drivers",
+    "explicacao": "É necessário rodar o teste de memória do Windows (mdsched.exe) e verificar se há drivers desatualizados no Gerenciador de Dispositivos."
+  },
+  {
+    "id": "R7",
+    "condicoes": [
+      "Ocorreu uma tela azul (BSOD)",
+      "Aviso de pouco espaço em disco"
+    ],
+    "conclusao": "Sistema comprometido por falta de recursos",
+    "explicacao": "Tela azul com disco cheio pode indicar que o sistema não consegue criar arquivos de dump ou memória virtual, agravando a instabilidade."
+  },
+  {
+    "id": "R8",
+    "condicoes": [
+      "Computador não liga"
+    ],
+    "conclusao": "Verificar fonte de energia e cabos",
+    "explicacao": "Quando o computador não liga, o primeiro diagnóstico é verificar se a tomada, cabo de energia e fonte estão funcionando."
+  },
+  {
+    "id": "R9",
+    "condicoes": [
+      "Computador não liga",
+      "LED da placa-mãe apagado"
+    ],
+    "conclusao": "Fonte de alimentação defeituosa",
+    "explicacao": "Se o LED da placa-mãe não acende, a fonte de alimentação provavelmente está queimada ou com defeito."
+  },
+  {
+    "id": "R10",
+    "condicoes": [
+      "Internet caindo constantemente",
+      "Velocidade muito abaixo do contratado"
+    ],
+    "conclusao": "Problema com o provedor de internet",
+    "explicacao": "Quedas frequentes combinadas com velocidade baixa indicam que o problema está na infraestrutura do provedor, não no equipamento local."
   }
 ]
