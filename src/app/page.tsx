@@ -7,22 +7,16 @@ import {
 } from "@/lib/inference";
 
 export default function Home() {
-  // Estado dos fatos ativos selecionados pelo usuário
+  // estado para fatos ativos
   const [fatosAtivos, setFatosAtivos] = useState<string[]>([]);
-  // Estado para inserção de fato customizado
   const [novoFato, setNovoFato] = useState("");
-  // Fatos customizados adicionados pelo usuário
   const [fatosCustomizados, setFatosCustomizados] = useState<string[]>([]);
-  // Resultado da inferência
   const [resultado, setResultado] = useState<ResultadoInferencia | null>(null);
-  // Regras carregadas da API
-  const [regras, setRegras] = useState<Regra[]>([]);
-  // Passo atual na animação da cadeia
+  const [regras, setRegras] = useState<Regra[]>([]); // regras da api
   const [passoVisivel, setPassoVisivel] = useState(0);
-  // Controle de animação
   const [animando, setAnimando] = useState(false);
 
-  // Sintomas predefinidos para seleção
+  // sintomas padrão para nao vir vazio
   const sintomasPredefinidos = [
     "Computador está lento",
     "Internet caindo constantemente",
@@ -34,7 +28,7 @@ export default function Home() {
     "Velocidade muito abaixo do contratado",
   ];
 
-  // Carrega regras do servidor ao montar
+  // // regras trazidas do json
   useEffect(() => {
     fetch("/api/regras")
       .then((res) => res.json())
@@ -42,14 +36,14 @@ export default function Home() {
       .catch(() => { });
   }, []);
 
-  // Alterna seleção de um fato
+  // selecao de fato
   const handleCheckbox = (label: string) => {
     setFatosAtivos((prev) =>
       prev.includes(label) ? prev.filter((f) => f !== label) : [...prev, label]
     );
   };
 
-  // Adiciona um fato customizado digitado pelo usuário
+  // adiciona fato customizado
   const adicionarFato = () => {
     const fato = novoFato.trim();
     if (fato && !fatosCustomizados.includes(fato) && !sintomasPredefinidos.includes(fato)) {
@@ -59,20 +53,20 @@ export default function Home() {
     }
   };
 
-  // Remove um fato customizado
+  // remover fayo customizado
   const removerFatoCustomizado = (fato: string) => {
     setFatosCustomizados((prev) => prev.filter((f) => f !== fato));
     setFatosAtivos((prev) => prev.filter((f) => f !== fato));
   };
 
-  // Executa a inferência por encadeamento para frente
+  // encadeamento para frente
   const analisar = () => {
     if (fatosAtivos.length === 0) return;
     const res = executarEncadeamento(fatosAtivos, regras);
     setResultado(res);
     setPassoVisivel(0);
 
-    // Animação: revela passo a passo
+    // animação
     if (res.cadeia.length > 0) {
       setAnimando(true);
       let step = 0;
@@ -87,7 +81,6 @@ export default function Home() {
     }
   };
 
-  // Limpa tudo para uma nova consulta
   const limpar = () => {
     setFatosAtivos([]);
     setFatosCustomizados([]);
@@ -97,7 +90,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#060b18] text-white">
-      {/* Header */}
       <header className="border-b border-gray-800/50 bg-[#0a1128]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -118,16 +110,13 @@ export default function Home() {
 
       <main className="max-w-6xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Coluna Esquerda: Base de Fatos */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Card: Inserir Fatos */}
             <div className="rounded-2xl border border-gray-800/60 bg-[#0d1525]/80 backdrop-blur p-6">
               <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-blue-400"></span>
                 Base de Fatos — Sintomas
               </h2>
 
-              {/* Sintomas predefinidos */}
               <div className="space-y-2 mb-4">
                 {sintomasPredefinidos.map((sintoma) => (
                   <label
@@ -160,7 +149,6 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Fatos customizados */}
               {fatosCustomizados.length > 0 && (
                 <div className="space-y-2 mb-4">
                   <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">
@@ -183,7 +171,6 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Input para fato customizado */}
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -203,7 +190,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card: Fatos Ativos (visualização) */}
             <div className="rounded-2xl border border-gray-800/60 bg-[#0d1525]/80 backdrop-blur p-6">
               <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -227,7 +213,6 @@ export default function Home() {
               )}
             </div>
 
-            {/* Botões de ação */}
             <div className="space-y-3">
               <button
                 onClick={analisar}
@@ -249,10 +234,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Coluna Direita: Resultados */}
+
           <div className="lg:col-span-2 space-y-6">
             {!resultado ? (
-              /* Estado Vazio */
               <div className="rounded-2xl border border-gray-800/40 bg-[#0d1525]/40 p-16 flex flex-col items-center justify-center text-center">
                 <h3 className="text-xl font-semibold text-gray-300 mb-2">
                   Motor de Inferência
@@ -264,7 +248,6 @@ export default function Home() {
                 </p>
               </div>
             ) : resultado.conclusoes.length === 0 ? (
-              /* Sem conclusões */
               <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-12 flex flex-col items-center justify-center text-center">
                 <span className="text-4xl mb-4">⚠️</span>
                 <h3 className="text-lg font-semibold text-amber-300 mb-2">
@@ -278,7 +261,6 @@ export default function Home() {
               </div>
             ) : (
               <>
-                {/* Conclusões */}
                 <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6">
                   <h2 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-4 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -304,7 +286,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Cadeia de Inferência Visual */}
                 <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-6">
                   <h2 className="text-sm font-semibold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-blue-400"></span>
@@ -316,7 +297,6 @@ export default function Home() {
                   </p>
 
                   <div className="relative">
-                    {/* Linha vertical conectora */}
                     <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500/40 to-transparent"></div>
 
                     <div className="space-y-6">
@@ -328,13 +308,11 @@ export default function Home() {
                               : "opacity-0 translate-y-4"
                             }`}
                         >
-                          {/* Número do passo na timeline */}
                           <div className="absolute left-3 w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold shadow-lg shadow-blue-500/30 z-10">
                             {passo.passo}
                           </div>
 
                           <div className="rounded-xl border border-gray-800/60 bg-[#0d1525]/80 p-5">
-                            {/* Header do passo */}
                             <div className="flex items-center gap-2 mb-3">
                               <span className="px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-300 text-xs font-bold">
                                 {passo.regraId}
@@ -347,7 +325,6 @@ export default function Home() {
                               </span>
                             </div>
 
-                            {/* Condições que ativaram */}
                             <div className="mb-3">
                               <p className="text-xs text-gray-500 mb-1.5">
                                 Condições satisfeitas:
@@ -364,7 +341,6 @@ export default function Home() {
                               </div>
                             </div>
 
-                            {/* Explicação em linguagem natural */}
                             <div className="p-3 rounded-lg bg-[#080e1c]/80 border border-gray-800/40">
                               <p className="text-xs text-gray-500 mb-1 font-medium">
                                 Explicação:
@@ -380,7 +356,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Explicação em Linguagem Natural */}
+                {/* falando a lingua do usuario */}
                 <div className="rounded-2xl border border-purple-500/30 bg-purple-500/5 p-6">
                   <h2 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-4 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-purple-400"></span>
@@ -398,7 +374,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Base de Fatos Final */}
                 <div className="rounded-2xl border border-gray-800/60 bg-[#0d1525]/80 p-6">
                   <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-gray-400"></span>
@@ -429,7 +404,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Animações CSS */}
       <style jsx>{`
         @keyframes fadeInUp {
           from {

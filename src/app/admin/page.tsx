@@ -9,28 +9,27 @@ type Regra = {
 };
 
 export default function AdminRegras() {
-    // Lista de regras carregadas do servidor
+    // regras trazidas do json
     const [regras, setRegras] = useState<Regra[]>([]);
-    // Campos do formulário
+    // campos
     const [condicoes, setCondicoes] = useState("");
     const [conclusao, setConclusao] = useState("");
     const [explicacao, setExplicacao] = useState("");
-    // Mensagens de status
+    // status
     const [status, setStatus] = useState("");
     const [statusTipo, setStatusTipo] = useState<"success" | "error" | "">("");
-    // Controle de edição
+    // edição
     const [editandoId, setEditandoId] = useState<string | null>(null);
-    // Loading
     const [carregando, setCarregando] = useState(true);
-    // Confirmação de exclusão
+    // exclusão
     const [confirmandoExclusao, setConfirmandoExclusao] = useState<string | null>(null);
 
-    // Carrega regras ao montar
+    // carrega regras ao montar
     useEffect(() => {
         carregarRegras();
     }, []);
 
-    // Limpa mensagem de status após 4 segundos
+    // limpa mensagem de status
     useEffect(() => {
         if (status) {
             const timer = setTimeout(() => {
@@ -62,7 +61,7 @@ export default function AdminRegras() {
         setEditandoId(null);
     };
 
-    // Cria ou atualiza regra
+    // cria ou atualiza regra
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -87,7 +86,7 @@ export default function AdminRegras() {
             let res: Response;
 
             if (editandoId) {
-                // Atualiza regra existente
+                // atualiza regra existente
                 regra.id = editandoId;
                 res = await fetch("/api/regras", {
                     method: "PUT",
@@ -95,7 +94,7 @@ export default function AdminRegras() {
                     body: JSON.stringify(regra),
                 });
             } else {
-                // Cria nova regra
+                // cria nova regra
                 res = await fetch("/api/regras", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -122,7 +121,7 @@ export default function AdminRegras() {
         }
     };
 
-    // Preenche formulário para edição
+    // preenche formulário para edição
     const editarRegra = (regra: Regra) => {
         setCondicoes(regra.condicoes.join(", "));
         setConclusao(regra.conclusao);
@@ -131,7 +130,7 @@ export default function AdminRegras() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    // Remove regra
+    // remove regra
     const excluirRegra = async (id: string) => {
         try {
             const res = await fetch(`/api/regras?id=${id}`, { method: "DELETE" });
@@ -152,7 +151,6 @@ export default function AdminRegras() {
 
     return (
         <div className="min-h-screen bg-[#060b18] text-white">
-            {/* Header */}
             <header className="border-b border-gray-800/50 bg-[#0a1128]/80 backdrop-blur-md sticky top-0 z-50">
                 <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -172,7 +170,6 @@ export default function AdminRegras() {
             </header>
 
             <main className="max-w-6xl mx-auto px-6 py-8">
-                {/* Mensagem de status global */}
                 {status && (
                     <div
                         className={`mb-6 p-4 rounded-xl border text-sm font-medium text-center transition-all ${statusTipo === "success"
@@ -185,7 +182,6 @@ export default function AdminRegras() {
                 )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Formulário */}
                     <div>
                         <div className="rounded-2xl border border-gray-800/60 bg-[#0d1525]/80 backdrop-blur p-8">
                             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6 flex items-center gap-2">
@@ -196,7 +192,6 @@ export default function AdminRegras() {
                             </h2>
 
                             <form onSubmit={handleSubmit} className="space-y-5">
-                                {/* Condições */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-300 mb-2">
                                         SE (Condições / Sintomas)
@@ -214,7 +209,6 @@ export default function AdminRegras() {
                                     </p>
                                 </div>
 
-                                {/* Conclusão */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-300 mb-2">
                                         ENTÃO (Conclusão / Diagnóstico)
@@ -229,7 +223,6 @@ export default function AdminRegras() {
                                     />
                                 </div>
 
-                                {/* Explicação */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-300 mb-2">
                                         Explicação do Raciocínio
@@ -243,7 +236,6 @@ export default function AdminRegras() {
                                     />
                                 </div>
 
-                                {/* Preview da regra */}
                                 <div className="p-4 rounded-xl bg-[#080e1c] border border-gray-800/40">
                                     <p className="text-xs text-gray-500 mb-2 font-medium">
                                         Pré-visualização da regra:
@@ -260,7 +252,6 @@ export default function AdminRegras() {
                                     </p>
                                 </div>
 
-                                {/* Botões */}
                                 <div className="flex gap-3">
                                     <button
                                         type="submit"
@@ -284,7 +275,6 @@ export default function AdminRegras() {
                         </div>
                     </div>
 
-                    {/* Lista de Regras */}
                     <div>
                         <div className="rounded-2xl border border-gray-800/60 bg-[#0d1525]/80 backdrop-blur p-8">
                             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6 flex items-center gap-2">
@@ -313,7 +303,6 @@ export default function AdminRegras() {
                                                     : "border-gray-800/40 bg-[#0b1120]/60 hover:border-gray-700/60"
                                                 }`}
                                         >
-                                            {/* Header da regra */}
                                             <div className="flex items-center justify-between mb-3">
                                                 <span className="px-2.5 py-1 rounded-md bg-cyan-500/15 text-cyan-300 text-xs font-bold">
                                                     {regra.id}
@@ -355,7 +344,6 @@ export default function AdminRegras() {
                                                 </div>
                                             </div>
 
-                                            {/* Conteúdo da regra no formato SE ... ENTÃO */}
                                             <div className="mb-3">
                                                 <p className="text-sm text-gray-300">
                                                     <span className="text-purple-400 font-bold">
@@ -384,7 +372,7 @@ export default function AdminRegras() {
                                                 </p>
                                             </div>
 
-                                            {/* Explicação */}
+                                            {/* explicação */}
                                             <p className="text-xs text-gray-500 italic leading-relaxed">
                                                 {regra.explicacao}
                                             </p>

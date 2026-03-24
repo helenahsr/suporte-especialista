@@ -1,4 +1,4 @@
-// Tipo que representa uma regra de produção no sistema especialista
+// tipo que representa uma regra de produção no sistema especialista
 export type Regra = {
   id: string;
   condicoes: string[];
@@ -6,7 +6,7 @@ export type Regra = {
   explicacao: string;
 };
 
-// Tipo que representa um passo na cadeia de inferência
+// tipo que representa um passo na cadeia de inferência
 export type PassoInferencia = {
   passo: number;
   regraId: string;
@@ -18,7 +18,7 @@ export type PassoInferencia = {
   fatosDepoisDisparo: string[];
 };
 
-// Tipo do resultado do encadeamento
+// tipo do resultado do encadeamento
 export type ResultadoInferencia = {
   conclusoes: string[];
   cadeia: PassoInferencia[];
@@ -28,27 +28,23 @@ export type ResultadoInferencia = {
 };
 
 /**
- * Motor de Inferência por Encadeamento para Frente (Forward Chaining)
- * 
- * Aplica as regras de produção repetidamente até que nenhuma nova 
- * conclusão possa ser derivada dos fatos conhecidos.
- * 
- * Cada iteração percorre todas as regras verificando se suas condições
- * são satisfeitas pelos fatos atuais. Quando uma regra dispara, sua
- * conclusão é adicionada à base de fatos e a cadeia de inferência
- * é registrada para o motor de explicação.
+ Encadeamento para frente 
+ aplica regras repetidamente até que nenhuma nova conclusão possa ser derivada dos fatos conhecidos. 
+ cada iteração percorre todas as regras verificando se suas condições são satisfeitas pelos fatos atuais. 
+ quando uma regra roda, sua conclusão é adicionada à base de fatos e a cadeia de inferência é registrada para explicação.
  */
+
 export function executarEncadeamento(
   fatosIniciais: string[],
   regras: Regra[]
 ): ResultadoInferencia {
-  // Base de fatos atual (começa com os fatos iniciais)
+  // base de fatos atual (começa com os fatos iniciais)
   let fatos = new Set(fatosIniciais);
-  // Registro de todos os passos da cadeia de inferência
+  // registro de todos os passos da cadeia de inferência
   let cadeia: PassoInferencia[] = [];
-  // Regras que já foram disparadas
+  // regras que já foram disparadas
   let regrasDisparadas: Regra[] = [];
-  // Controle de loop
+  // controle de loop
   let novasConclusoes = true;
   let totalIteracoes = 0;
   let passoAtual = 0;
@@ -58,22 +54,22 @@ export function executarEncadeamento(
     totalIteracoes++;
 
     for (const regra of regras) {
-      // Se a conclusão já é um fato conhecido, pula
+      // se a conclusão ja é um fato conhecido, pula
       if (fatos.has(regra.conclusao)) continue;
 
-      // Verifica se todas as condições da regra estão na base de fatos
+      // verifica se todas as condições da regra estão na base de fatos
       const podeDisparar = regra.condicoes.every((c) => fatos.has(c));
 
       if (podeDisparar) {
         passoAtual++;
         const fatosAntes = Array.from(fatos);
 
-        // Adiciona a conclusão aos fatos
+        // adiciona a conclusão aos fatos
         fatos.add(regra.conclusao);
 
         const fatosDepois = Array.from(fatos);
 
-        // Gera explicação em linguagem natural
+        // gera explicação em linguagem natural
         const condicoesTexto = regra.condicoes
           .map((c) => `"${c}"`)
           .join(" e ");
@@ -82,7 +78,7 @@ export function executarEncadeamento(
           `a regra ${regra.id} foi ativada e concluiu: "${regra.conclusao}". ` +
           `Justificativa: ${regra.explicacao}`;
 
-        // Registra o passo na cadeia de inferência
+        // registra o passo na cadeia de inferência
         cadeia.push({
           passo: passoAtual,
           regraId: regra.id,
