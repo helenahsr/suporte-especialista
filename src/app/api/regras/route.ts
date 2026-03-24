@@ -2,23 +2,23 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// Define o caminho para o arquivo de regras (persistência em JSON)
+// define o caminho para o json de regras
 const rulesFilePath = path.join(process.cwd(), 'src', 'data', 'rules.json');
 
-// Função auxiliar para ler as regras do arquivo
+// função auxiliar para ler as regras do json
 function lerRegras() {
     const fileData = fs.readFileSync(rulesFilePath, 'utf8');
     return JSON.parse(fileData || '[]');
 }
 
-// Função auxiliar para salvar as regras no arquivo
+// função auxiliar para salvar as regras no json
 function salvarRegras(regras: any[]) {
     fs.writeFileSync(rulesFilePath, JSON.stringify(regras, null, 2));
 }
 
 /**
  * GET /api/regras
- * Retorna todas as regras da base de conhecimento
+ * retorna todas as regras da base de conhecimento
  */
 export async function GET() {
     try {
@@ -32,26 +32,26 @@ export async function GET() {
 
 /**
  * POST /api/regras
- * Adiciona uma nova regra à base de conhecimento
+ * adiciona uma nova regra à base de conhecimento
  */
 export async function POST(request: Request) {
     try {
         const novaRegra = await request.json();
 
-        // Lê o arquivo atual
+        // lê o arquivo atual
         const regras = lerRegras();
 
-        // Gera um ID simples (ex: R3, R4...)
+        // gera um ID
         const maxId = regras.reduce((max: number, r: any) => {
             const num = parseInt(r.id.replace('R', ''));
             return num > max ? num : max;
         }, 0);
         novaRegra.id = `R${maxId + 1}`;
 
-        // Adiciona a nova regra ao array
+        // adiciona a nova regra ao array
         regras.push(novaRegra);
 
-        // Reescreve o arquivo JSON com a nova regra
+        // salva o JSON com a nova regra
         salvarRegras(regras);
 
         return NextResponse.json(
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 
 /**
  * DELETE /api/regras
- * Remove uma regra pelo ID (passado via query string ?id=R1)
+ * remove uma regra pelo ID
  */
 export async function DELETE(request: Request) {
     try {
