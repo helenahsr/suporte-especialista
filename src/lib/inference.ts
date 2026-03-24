@@ -34,10 +34,7 @@ export type ResultadoInferencia = {
  quando uma regra roda, sua conclusão é adicionada à base de fatos e a cadeia de inferência é registrada para explicação.
  */
 
-export function executarEncadeamento(
-  fatosIniciais: string[],
-  regras: Regra[]
-): ResultadoInferencia {
+ResultadoInferencia {
   // base de fatos atual (começa com os fatos iniciais)
   let fatos = new Set(fatosIniciais);
   // registro de todos os passos da cadeia de inferência
