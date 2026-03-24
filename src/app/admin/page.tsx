@@ -173,8 +173,8 @@ export default function AdminRegras() {
                 {status && (
                     <div
                         className={`mb-6 p-4 rounded-xl border text-sm font-medium text-center transition-all ${statusTipo === "success"
-                                ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
-                                : "bg-red-500/10 border-red-500/30 text-red-300"
+                            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                            : "bg-red-500/10 border-red-500/30 text-red-300"
                             }`}
                     >
                         {status}
@@ -299,8 +299,8 @@ export default function AdminRegras() {
                                         <div
                                             key={regra.id}
                                             className={`group rounded-xl border p-5 transition-all duration-200 ${editandoId === regra.id
-                                                    ? "border-purple-500/50 bg-purple-500/5"
-                                                    : "border-gray-800/40 bg-[#0b1120]/60 hover:border-gray-700/60"
+                                                ? "border-purple-500/50 bg-purple-500/5"
+                                                : "border-gray-800/40 bg-[#0b1120]/60 hover:border-gray-700/60"
                                                 }`}
                                         >
                                             <div className="flex items-center justify-between mb-3">
@@ -386,21 +386,7 @@ export default function AdminRegras() {
             </main>
 
             {/* Scrollbar customizada */}
-            <style jsx>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(139, 92, 246, 0.3);
-          border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(139, 92, 246, 0.5);
-        }
-      `}</style>
+
         </div>
     );
 }

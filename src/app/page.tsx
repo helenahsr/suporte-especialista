@@ -122,8 +122,8 @@ export default function Home() {
                   <label
                     key={sintoma}
                     className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border ${fatosAtivos.includes(sintoma)
-                        ? "bg-blue-500/10 border-blue-500/40 text-blue-300"
-                        : "bg-gray-900/30 border-gray-800/40 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
+                      ? "bg-blue-500/10 border-blue-500/40 text-blue-300"
+                      : "bg-gray-900/30 border-gray-800/40 text-gray-400 hover:bg-gray-800/40 hover:text-gray-300"
                       }`}
                   >
                     <input
@@ -134,8 +134,8 @@ export default function Home() {
                     />
                     <div
                       className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${fatosAtivos.includes(sintoma)
-                          ? "bg-blue-500 border-blue-500"
-                          : "border-gray-600"
+                        ? "bg-blue-500 border-blue-500"
+                        : "border-gray-600"
                         }`}
                     >
                       {fatosAtivos.includes(sintoma) && (
@@ -303,8 +303,8 @@ export default function Home() {
                         <div
                           key={passo.passo}
                           className={`relative pl-14 transition-all duration-500 ${i < passoVisivel
-                              ? "opacity-100 translate-y-0"
-                              : "opacity-0 translate-y-4"
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-4"
                             }`}
                         >
                           <div className="absolute left-3 w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold shadow-lg shadow-blue-500/30 z-10">
@@ -383,8 +383,8 @@ export default function Home() {
                       <span
                         key={f}
                         className={`px-3 py-1.5 rounded-lg text-xs border ${fatosAtivos.includes(f)
-                            ? "bg-gray-800/40 border-gray-700/40 text-gray-400"
-                            : "bg-emerald-500/10 border-emerald-500/20 text-emerald-300 font-medium"
+                          ? "bg-gray-800/40 border-gray-700/40 text-gray-400"
+                          : "bg-emerald-500/10 border-emerald-500/20 text-emerald-300 font-medium"
                           }`}
                       >
                         {fatosAtivos.includes(f) ? "" : ""}
@@ -403,18 +403,7 @@ export default function Home() {
         </div>
       </main>
 
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(12px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+
     </div>
   );
 }
