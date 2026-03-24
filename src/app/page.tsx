@@ -249,7 +249,6 @@ export default function Home() {
               </div>
             ) : resultado.conclusoes.length === 0 ? (
               <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-12 flex flex-col items-center justify-center text-center">
-                <span className="text-4xl mb-4">⚠️</span>
                 <h3 className="text-lg font-semibold text-amber-300 mb-2">
                   Nenhuma conclusão encontrada
                 </h3>
